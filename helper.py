@@ -19,23 +19,29 @@ def prepare_success_error_files(json_data, success_keys, error_keys):
 
     success_data = list(filter(lambda data: 'success' in data, json_data))
     with open('success' + formatted_datestr + '.csv', 'w', newline='') as success_file:
-        writer = csv.DictWriter(success_file, fieldnames=success_keys)
+        writer = csv.DictWriter(success_file, fieldnames=success_keys, extrasaction='ignore')
         writer.writeheader()
         writer.writerows(success_data)
 
     error_data = list(filter(lambda data: 'errors' in data, json_data))
     with open('error' + formatted_datestr + '.csv', 'w') as error_file:
-        writer = csv.DictWriter(error_file, fieldnames=error_keys)
+        writer = csv.DictWriter(error_file, fieldnames=error_keys, extrasaction='ignore')
         writer.writeheader()
         writer.writerows(error_data)
 
     return success_file, error_file
 
 
-def prepare_success_error_keys(json_data):
-    data_keys = list(json_data[0].keys())
-    success_keys = data_keys + ['Id', 'success']
-    error_keys = data_keys + ['errors']
+def prepare_success_error_keys(result_data, json_data):
+    data_keys = list(result_data[0].keys())
+    json_keys = list(json_data[0].keys())
+
+    success_keys = data_keys[:]
+    error_keys = data_keys[:]
+
+    success_keys.remove('errors')
+    error_keys.remove('success')
+    error_keys.remove('created')
 
     return success_keys, error_keys
 
