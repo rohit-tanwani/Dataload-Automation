@@ -32,9 +32,8 @@ def prepare_success_error_files(json_data, success_keys, error_keys):
     return success_file, error_file
 
 
-def prepare_success_error_keys(result_data, json_data):
+def prepare_success_error_keys(result_data):
     data_keys = list(result_data[0].keys())
-    json_keys = list(json_data[0].keys())
 
     success_keys = data_keys[:]
     error_keys = data_keys[:]

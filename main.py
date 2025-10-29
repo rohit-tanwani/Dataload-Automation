@@ -5,12 +5,24 @@ from simple_salesforce.exceptions import SalesforceMalformedRequest
 
 import helper as hp
 
+def check_for_external_ids(data):
+    result = {}
+    for key, value in data.items():
+        parts = key.split('.')
+        current = result
+        for i, part in enumerate(parts):
+            if i == len(parts) - 1:
+                current[part] = value
+            else:
+                current = current.setdefault(part, {})
+    return result
 
-def prepare_result_files(result_data, json_data):
+
+def prepare_result_files(result_data):
     if not result_data:
         return
 
-    success_keys, error_keys = hp.prepare_success_error_keys(result_data, json_data)
+    success_keys, error_keys = hp.prepare_success_error_keys(result_data)
     hp.prepare_success_error_files(result_data, success_keys, error_keys)
 
 
@@ -49,15 +61,18 @@ def navigate_to_location(files_location, sf_instance):
     operation_name = operation_details.get("operationName")
 
     try:
+        #adding for converting external id data
+        final_data_json = [check_for_external_ids(data) for data in json_data]
+
         #below method skips the execution for single record.
         result = sf_instance.bulk.submit_dml(object_name=object_api_name, dml=operation_name,
-                                             data=json_data, include_detailed_results=True,
+                                             data=final_data_json, include_detailed_results=True,
                                              batch_size="auto")
         if not os.path.exists('__results__'):
             os.mkdir('__results__')
         os.chdir('__results__')
 
-        prepare_result_files(result, json_data)
+        prepare_result_files(result)
 
         os.chdir(files_location)
     except (SalesforceMalformedRequest, ValueError) as e:
