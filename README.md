@@ -124,26 +124,3 @@ It exists to:
 
 Use this tool in non-production environments first.
 Always validate data and permissions before running in production.
-
-
----
-
-## Why this README works (important insight)
-
-- It **leads with the problem**, not the script
-- It defines **who should use it**
-- It explains **when NOT to use it**
-- It builds trust by listing limitations
-- It positions the tool as a **deployment utility**, not a hack
-
-This is now a **real asset**, not a personal script.
-
----
-
-### Next step (don’t skip this):
-Do you want me to help you:
-- **Write the Medium article** that complements this repo  
-- **Design a config-based load order** (`yaml/json`)  
-- **Turn this into a CLI tool**  
-
-Pick **one** and we continue.
