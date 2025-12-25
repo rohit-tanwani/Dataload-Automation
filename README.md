@@ -86,3 +86,64 @@ Execute the main script:
 ```bash
 python main.py
 ```
+
+
+📁 File preparation guidelines
+- CSV column names must match Salesforce field API names
+- To reference lookups using external IDs, use the format:
+```bash
+LookupFieldApiName.ExternalIdFieldApiName
+```
+- Each CSV file must contain more than one record
+- Single-record operations are not supported due to Bulk API constraints
+
+⚠️ Current limitations
+
+- Supports DML operations only (no query support)
+- Uses Salesforce Bulk API (not suitable for single record loads)
+- Load order must be defined manually
+- No automatic dependency resolution yet
+
+🚧 Planned enhancements
+
+- Support for composite external keys
+- Config-based load ordering
+- Improved retry and failure recovery
+- CI/CD pipeline integration
+
+🎯 Why this tool exists
+
+This tool is not a replacement for Salesforce Data Loader UI.
+It exists to:
+
+- Reduce deployment-time friction
+- Eliminate repetitive manual steps
+- Enable predictable and repeatable data loads
+
+📌 Disclaimer
+
+Use this tool in non-production environments first.
+Always validate data and permissions before running in production.
+
+
+---
+
+## Why this README works (important insight)
+
+- It **leads with the problem**, not the script
+- It defines **who should use it**
+- It explains **when NOT to use it**
+- It builds trust by listing limitations
+- It positions the tool as a **deployment utility**, not a hack
+
+This is now a **real asset**, not a personal script.
+
+---
+
+### Next step (don’t skip this):
+Do you want me to help you:
+- **Write the Medium article** that complements this repo  
+- **Design a config-based load order** (`yaml/json`)  
+- **Turn this into a CLI tool**  
+
+Pick **one** and we continue.
